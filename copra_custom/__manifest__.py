@@ -6,7 +6,8 @@
     "author":"Nueva IT",
     "company": "Nueva IT",
     "category": 'Sales/Sales',
-    "depends": ['base', 'sale_management', 'product'],
+    "depends": ['base', 'sale_management', 'product',
+                'sale_stock'],
     "license":"LGPL-3",
     "sequence": 100,
     "data": [
