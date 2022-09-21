@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_picking_copra"
+            inherit_id="stock.report_picking">
+            <xpath expr="//th[@name='th_product']" position="after">
+                <th name="th_tag">
+                    <strong>TAG</strong>
+                </th>
+                <th name="th_sfi">
+                    <strong>SFI</strong>
+                </th>
+            </xpath>
+            <xpath expr="//tbody/t/tr/td[1]" position="after">
+                <td>
+                    <span t-field="ml.move_id.tag" />
+                </td>
+                <td>
+                    <span t-field="ml.move_id.sfi" />
+                </td>
+            </xpath>
+        </template>
+
+        <template id="report_delivery_document_copra"
+            inherit_id="stock.report_delivery_document">
+            <xpath expr="//th[@name='th_sm_product']" position="after">
+                <th name="th_tag">
+                    <strong>TAG</strong>
+                </th>
+                <th name="th_sfi">
+                    <strong>SFI</strong>
+                </th>
+            </xpath>
+            <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="after">
+                <td>
+                    <span t-field="move.tag" />
+                </td>
+                <td>
+                    <span t-field="move.sfi" />
+                </td>
+            </xpath>
+        </template>
+        
+    </data>
+</odoo>

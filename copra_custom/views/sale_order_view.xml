@@ -13,6 +13,14 @@
                     <newline/>
                     <field name="freight_type" />
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="tag"/>
+                    <field name="sfi"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
+                    <field name="tag"/>
+                    <field name="sfi"/>
+                </xpath>
             </field>
         </record>
 

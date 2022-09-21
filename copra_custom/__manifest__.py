@@ -7,13 +7,16 @@
     "company": "Nueva IT",
     "category": 'Sales/Sales',
     "depends": ['base', 'sale_management', 'product',
-                'sale_stock'],
+                'sale_stock', 'purchase', 'purchase_stock'],
     "license":"LGPL-3",
     "sequence": 100,
     "data": [
         "security/ir.model.access.csv",
         "data/sequence_data.xml",
+        "report/picking_report.xml",
         "views/sale_order_view.xml",
+        "views/stock_picking_view.xml",
+        "views/purchase_order_line_view.xml"
     ],
     "installable": True,
     "auto_install": False,
