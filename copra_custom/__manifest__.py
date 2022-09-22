@@ -7,7 +7,8 @@
     "company": "Nueva IT",
     "category": 'Sales/Sales',
     "depends": ['base', 'sale_management', 'product',
-                'sale_stock', 'purchase', 'purchase_stock'],
+                'sale_stock', 'purchase', 'purchase_stock',
+                'stock_dropshipping'],
     "license":"LGPL-3",
     "sequence": 100,
     "data": [

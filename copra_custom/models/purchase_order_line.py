@@ -14,3 +14,12 @@ class PurchaseOrderLine(models.Model):
             res['tag'] = self.tag
             res['sfi'] = self.sfi
         return res
+
+    @api.model
+    def _prepare_purchase_order_line_from_procurement(self, product_id, product_qty, product_uom, company_id, values, po):
+        res = super(PurchaseOrderLine, self)._prepare_purchase_order_line_from_procurement(product_id, product_qty, product_uom, company_id, values, po)
+        if res.get('sale_line_id', False):
+            sale_line_rec = self.env['sale.order.line'].browse(res['sale_line_id'])
+            res['sfi'] = sale_line_rec.sfi or ''
+            res['tag'] = sale_line_rec.tag or ''
+        return res
