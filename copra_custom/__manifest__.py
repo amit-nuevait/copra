@@ -17,7 +17,8 @@
         "report/picking_report.xml",
         "views/sale_order_view.xml",
         "views/stock_picking_view.xml",
-        "views/purchase_order_line_view.xml"
+        "views/purchase_order_line_view.xml",
+        "views/product_template_view.xml"
     ],
     "installable": True,
     "auto_install": False,
