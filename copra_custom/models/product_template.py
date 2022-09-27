@@ -7,10 +7,13 @@ class ProductProduct(models.Model):
     height = fields.Float("Height(mm)")
     width = fields.Float("Width(mm)")
     depth = fields.Float("Depth(mm)")
-    package_measurement = fields.Float("Package Measurement")
-    gross_weight = fields.Float("Gross Weight(g)", digits='Stock Weight')
     net_weight = fields.Float("Net Weight(g)", digits='Stock Weight')
+    package_height = fields.Float("Package Height(mm)")
+    package_width = fields.Float("Package Width(mm)")
+    package_depth = fields.Float("Package Depth(mm)")
+    package_gross_weight =fields.Float("Package Gross Weight(g)")
 
+    
     @api.model
     def create(self, vals):
         if 'default_code' not in vals or not vals.get('default_code', False):
@@ -33,14 +36,15 @@ class ProductTemplate(models.Model):
     height = fields.Float("Height(mm)", compute='_compute_height', inverse='_set_height', store=True)
     width = fields.Float("Width(mm)", compute='_compute_width', inverse='_set_width', store=True)
     depth = fields.Float("Depth(mm)", compute='_compute_depth', inverse='_set_depth', store=True)
-    package_measurement = fields.Float("Package Measurement", compute='_compute_package_measurement', inverse='_set_package_measurement',
-                                 store=True)
-    gross_weight = fields.Float("Gross Weight(g)", compute='_compute_gross_weight', inverse='_set_gross_weight',
-                                 store=True, digits='Stock Weight')
     net_weight = fields.Float("Net Weight(g)",compute='_compute_net_weight', inverse='_set_net_weight',
                                  store=True, digits='Stock Weight')
+    package_height = fields.Float("Package Height(mm)", compute='_compute_package_height', inverse='_set_package_height', store=True)
+    package_width = fields.Float("Package Width(mm)", compute='_compute_package_width', inverse='_set_package_width', store=True)
+    package_depth = fields.Float("Package Depth(mm)", compute='_compute_package_depth', inverse='_set_package_depth', store=True)
+    package_gross_weight =fields.Float("Package Gross Weight(g)", compute='_compute_package_gross_weight', 
+        inverse='_set_package_gross_weight', store=True)
 
-
+    # height
     @api.depends('product_variant_ids', 'product_variant_ids.height')
     def _compute_height(self):
         unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
@@ -54,7 +58,7 @@ class ProductTemplate(models.Model):
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.height = template.height
 
-
+    #width
     @api.depends('product_variant_ids', 'product_variant_ids.width')
     def _compute_width(self):
         unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
@@ -68,7 +72,7 @@ class ProductTemplate(models.Model):
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.width = template.width
 
-
+    # depth
     @api.depends('product_variant_ids', 'product_variant_ids.depth')
     def _compute_depth(self):
         unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
@@ -82,35 +86,7 @@ class ProductTemplate(models.Model):
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.depth = template.depth
 
-
-    @api.depends('product_variant_ids', 'product_variant_ids.package_measurement')
-    def _compute_package_measurement(self):
-        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
-        for template in unique_variants:
-            template.package_measurement = template.product_variant_ids.package_measurement
-        for template in (self - unique_variants):
-            template.package_measurement = False
-
-    def _set_package_measurement(self):
-        for template in self:
-            if len(template.product_variant_ids) == 1:
-                template.product_variant_ids.package_measurement = template.package_measurement
-
-
-    @api.depends('product_variant_ids', 'product_variant_ids.gross_weight')
-    def _compute_gross_weight(self):
-        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
-        for template in unique_variants:
-            template.gross_weight = template.product_variant_ids.gross_weight
-        for template in (self - unique_variants):
-            template.gross_weight = False
-
-    def _set_gross_weight(self):
-        for template in self:
-            if len(template.product_variant_ids) == 1:
-                template.product_variant_ids.gross_weight = template.gross_weight
-
-
+    # net weight
     @api.depends('product_variant_ids', 'product_variant_ids.net_weight')
     def _compute_net_weight(self):
         unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
@@ -123,3 +99,59 @@ class ProductTemplate(models.Model):
         for template in self:
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.net_weight = template.net_weight
+
+    # package height
+    @api.depends('product_variant_ids', 'product_variant_ids.package_height')
+    def _compute_package_height(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.package_height = template.product_variant_ids.package_height
+        for template in (self - unique_variants):
+            template.package_height = False
+
+    def _set_package_height(self):
+        for template in self:
+            if len(template.product_variant_ids) == 1:
+                template.product_variant_ids.package_height = template.package_height
+
+    # package width
+    @api.depends('product_variant_ids', 'product_variant_ids.package_width')
+    def _compute_package_width(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.package_width = template.product_variant_ids.package_width
+        for template in (self - unique_variants):
+            template.package_width = False
+
+    def _set_package_width(self):
+        for template in self:
+            if len(template.product_variant_ids) == 1:
+                template.product_variant_ids.package_width = template.package_width
+
+    # package depth
+    @api.depends('product_variant_ids', 'product_variant_ids.package_depth')
+    def _compute_package_depth(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.package_depth = template.product_variant_ids.package_depth
+        for template in (self - unique_variants):
+            template.package_depth = False
+
+    def _set_package_depth(self):
+        for template in self:
+            if len(template.product_variant_ids) == 1:
+                template.product_variant_ids.package_depth = template.package_depth
+
+    # package gross weight
+    @api.depends('product_variant_ids', 'product_variant_ids.package_gross_weight')
+    def _compute_package_gross_weight(self):
+        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
+        for template in unique_variants:
+            template.package_gross_weight = template.product_variant_ids.package_gross_weight
+        for template in (self - unique_variants):
+            template.package_gross_weight = False
+
+    def _set_package_gross_weight(self):
+        for template in self:
+            if len(template.product_variant_ids) == 1:
+                template.product_variant_ids.package_gross_weight = template.package_gross_weight

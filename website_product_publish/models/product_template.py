@@ -25,9 +25,10 @@ from odoo import models, api, fields, _
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
+   
     def quick_publish_products(self):
-        for rec in self:
-            rec.is_published = True if not rec.is_published else False
+        self.is_published = not self.is_published
+        self.website_published = self.is_published
 
         return {
             'type': 'ir.actions.client',

@@ -7,13 +7,17 @@
             <field name="inherit_id" ref="stock.view_template_property_form" />
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='stock_property']" position="after">
-                    <group name="measurements" string="Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
+                    <group name="product_measurements" string="Product Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
                         <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
-                        <field name="package_measurement"/>
-                        <field name="gross_weight"/>
                         <field name="net_weight"/>
+                    </group>
+                    <group name="package_measurements" string="Package Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
+                        <field name="package_height"/>
+                        <field name="package_width"/>
+                        <field name="package_depth"/>
+                        <field name="package_gross_weight"/>
                     </group> 
                 </xpath>
             </field>
@@ -25,14 +29,18 @@
             <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='weight']" position="after">
-                    <group name="measurements" string="Measurement">
+                    <group name="product_measurements" string="Product Measurement">
                         <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
-                        <field name="package_measurement"/>
-                        <field name="gross_weight"/>
                         <field name="net_weight"/>
                     </group> 
+                     <group name="package_measurements" string="Package Measurement">
+                        <field name="package_height"/>
+                        <field name="package_width"/>
+                        <field name="package_depth"/>
+                        <field name="package_gross_weight"/>
+                    </group>
                 </xpath>
             </field>
         </record>
