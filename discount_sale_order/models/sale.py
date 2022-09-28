@@ -96,7 +96,7 @@ class SaleOrder(models.Model):
     global_order_discount = fields.Float(string='Global Discount', store=True, tracking=True)
 
     def _create_invoices(self, grouped=False, final=False, date=False):
-        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
+        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
         moves._compute_amount()
         return moves
 
