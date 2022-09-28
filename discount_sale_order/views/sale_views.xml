@@ -13,7 +13,7 @@
                 <xpath expr="//group[@name='note_group']" position="before">
                     <group>
                         <group>
-                            <field name="global_discount_type" groups="discount_account_invoice.group_order_global_discount" attrs="{'required': [('global_order_discount', '>', 0.0)], 'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
+                            <field name="global_discount_type" groups="discount_account_invoice.group_order_global_discount" class="oe_inline" attrs="{'required': [('global_order_discount', '>', 0.0)], 'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
                             <field name="global_order_discount" groups="discount_account_invoice.group_order_global_discount" class="oe_inline" attrs="{'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
                         </group>
                         <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">

@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
                 'amount_tax': amount_tax,
                 'amount_total': total,
                 'total_global_discount': total_global_discount,
-                'total_discount': total_discount,
+                'total_discount': total_global_discount,
             })
 
     def _amount_by_group(self):
@@ -95,8 +95,8 @@ class SaleOrder(models.Model):
         help="If global discount type 'Fixed' has been applied then no partial invoice will be generated for this order.")
     global_order_discount = fields.Float(string='Global Discount', store=True, tracking=True)
 
-    def _create_invoices(self, grouped=False, final=False, date=False):
-        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
+    def _create_invoices(self, grouped=False, final=False):
+        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
         moves._compute_amount()
         return moves
 
