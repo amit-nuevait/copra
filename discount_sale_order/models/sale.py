@@ -95,8 +95,8 @@ class SaleOrder(models.Model):
         help="If global discount type 'Fixed' has been applied then no partial invoice will be generated for this order.")
     global_order_discount = fields.Float(string='Global Discount', store=True, tracking=True)
 
-    def _create_invoices(self, grouped=False, final=False):
-        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
+    def _create_invoices(self, grouped=False, final=False, date=None):
+        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
         moves._compute_amount()
         return moves
 
