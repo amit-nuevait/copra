@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-        <record id="view_product_template_inherited_form" model="ir.ui.view">
+        <record id="view_product_template_inherited_copra_form" model="ir.ui.view">
             <field name="name">product.template.inherited.form.copra</field>
             <field name="model">product.template</field>
-            <field name="inherit_id" ref="stock.view_template_property_form" />
+            <field name="inherit_id" ref="stock.view_template_property_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='stock_property']" position="after">
                     <group name="product_measurements" string="Product Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
@@ -13,34 +13,52 @@
                         <field name="depth"/>
                         <field name="net_weight"/>
                     </group>
-                    <group name="package_measurements" string="Package Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
-                        <field name="package_height"/>
-                        <field name="package_width"/>
-                        <field name="package_depth"/>
-                        <field name="package_gross_weight"/>
-                    </group> 
                 </xpath>
             </field>
         </record>
 
-        <record id="view_product_inherited_form" model="ir.ui.view">
+        <record id="product_weight_product_normal_form_copra_view" model="ir.ui.view">
+            <field name="name">product.weight.product.normal.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='weight']" position="before">
+                    <field name="package_height"/>
+                    <field name="package_width"/>
+                    <field name="package_depth"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_weight_product_normal_form_copra_responsible_view" model="ir.ui.view">
+            <field name="name">product.weight.product.normal.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_lots_and_weight']/field[@name='responsible_id']" position="replace"/>
+                <xpath expr="//field[@name='package_height']" position="before">
+                    <field name="responsible_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_product_inherited_copra_form" model="ir.ui.view">
             <field name="name">product.product.inherited.form.copra</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='weight']" position="after">
-                    <group name="product_measurements" string="Product Measurement">
+                    <group name="packaging" string="Product Measurement">
                         <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
                         <field name="net_weight"/>
-                    </group> 
-                     <group name="package_measurements" string="Package Measurement">
-                        <field name="package_height"/>
-                        <field name="package_width"/>
-                        <field name="package_depth"/>
-                        <field name="package_gross_weight"/>
                     </group>
+                </xpath> 
+                <xpath expr="//label[@for='weight']" position="before">
+                    <field name="package_height"/>
+                    <field name="package_width"/>
+                    <field name="package_depth"/>
                 </xpath>
             </field>
         </record>

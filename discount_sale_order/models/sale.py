@@ -94,9 +94,22 @@ class SaleOrder(models.Model):
         [('fixed', 'Fixed'), ('percent', 'Percent')], string="Discount Type", default="percent",
         help="If global discount type 'Fixed' has been applied then no partial invoice will be generated for this order.")
     global_order_discount = fields.Float(string='Global Discount', store=True, tracking=True)
-
-    def _create_invoices(self, grouped=False, final=False, date=None):
-        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
+    line_discount = fields.Monetary(string="Line Discount", store=True, readonly=True, tracking=True, 
+        compute="_compute_line_discount")
+          
+    @api.depends('order_line.discount')
+    def _compute_line_discount(self):
+        for order in self:
+            order.line_discount = 0
+            for line in order.order_line:
+                sub_total_amt = line.price_unit and line.product_uom_qty and (line.price_unit * line.product_uom_qty) or 0.00
+                if line.discount_type == 'fixed':
+                    line.discount_amt = line.discount or 0.00
+                if line.discount_type == 'percent':
+                    line.discount_amt = (sub_total_amt * line.discount) / 100  or 0.00
+                order.line_discount += line.discount_amt
+    def _create_invoices(self, grouped=False, final=False):
+        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
         moves._compute_amount()
         return moves
 
@@ -123,6 +136,8 @@ class SaleOrderLine(models.Model):
                                       ('percent', 'Percent')],
                                      string="Discount Type",
                                      default="percent")
+    discount_amt = fields.Float(string='Discount Amount', digits='Discount', default=0.0, readonly=True)
+
 
     @api.depends('product_uom_qty', 'discount_type', 'discount', 'price_unit', 'tax_id')
     def _compute_amount(self):

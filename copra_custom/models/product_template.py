@@ -1,4 +1,4 @@
-from odoo import api, models, fields
+from odoo import api, models, fields, _
 
 
 class ProductProduct(models.Model):
@@ -11,9 +11,15 @@ class ProductProduct(models.Model):
     package_height = fields.Float("Package Height(mm)")
     package_width = fields.Float("Package Width(mm)")
     package_depth = fields.Float("Package Depth(mm)")
-    package_gross_weight =fields.Float("Package Gross Weight(g)")
+    weight = fields.Float('Weight', digits='Stock Weight', readonly=True)
 
-    
+    @api.onchange('package_height','package_width','package_depth')
+    def _onchange_weight(self):
+        for rec in self:
+            rec.weight = 0.0
+            if rec.package_height and rec.package_width and rec.package_depth:
+                rec.weight = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
+      
     @api.model
     def create(self, vals):
         if 'default_code' not in vals or not vals.get('default_code', False):
@@ -41,8 +47,14 @@ class ProductTemplate(models.Model):
     package_height = fields.Float("Package Height(mm)", compute='_compute_package_height', inverse='_set_package_height', store=True)
     package_width = fields.Float("Package Width(mm)", compute='_compute_package_width', inverse='_set_package_width', store=True)
     package_depth = fields.Float("Package Depth(mm)", compute='_compute_package_depth', inverse='_set_package_depth', store=True)
-    package_gross_weight =fields.Float("Package Gross Weight(g)", compute='_compute_package_gross_weight', 
-        inverse='_set_package_gross_weight', store=True)
+    weight = fields.Float(readonly=True)
+    
+    @api.onchange('package_height','package_width','package_depth')
+    def _onchange_weight(self):
+        for rec in self:
+            rec.weight = 0.0
+            if rec.package_height and rec.package_width and rec.package_depth:
+                rec.weight = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
 
     # height
     @api.depends('product_variant_ids', 'product_variant_ids.height')
@@ -142,16 +154,3 @@ class ProductTemplate(models.Model):
             if len(template.product_variant_ids) == 1:
                 template.product_variant_ids.package_depth = template.package_depth
 
-    # package gross weight
-    @api.depends('product_variant_ids', 'product_variant_ids.package_gross_weight')
-    def _compute_package_gross_weight(self):
-        unique_variants = self.filtered(lambda template: len(template.product_variant_ids) == 1)
-        for template in unique_variants:
-            template.package_gross_weight = template.product_variant_ids.package_gross_weight
-        for template in (self - unique_variants):
-            template.package_gross_weight = False
-
-    def _set_package_gross_weight(self):
-        for template in self:
-            if len(template.product_variant_ids) == 1:
-                template.product_variant_ids.package_gross_weight = template.package_gross_weight
