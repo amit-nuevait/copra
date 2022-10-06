@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+nueva_product_website_documents.access_import_document_wizard,access_import_document_wizard,nueva_product_website_documents.model_import_document_wizard,base.group_user,1,1,1,1
