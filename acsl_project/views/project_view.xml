@@ -1,0 +1,3 @@
+<odoo>
+    <menuitem action="project.open_view_project_all_config" id="project.menu_projects" name="Projects" parent="project.menu_main_pm" sequence="1"/>
+</odoo>
