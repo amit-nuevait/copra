@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
-        <record id="view_product_template_inherited_copra_form" model="ir.ui.view">
-            <field name="name">product.template.inherited.form.copra</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="stock.view_template_property_form"/>
+        <record id="product_weight_product_normal_form_copra_view" model="ir.ui.view">
+            <field name="name">product.weight.product.normal.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='stock_property']" position="after">
-                    <group name="product_measurements" string="Product Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
+                <xpath expr="//label[@for='volume']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='volume']" position="before">
+                    <field name="package_height"/>
+                    <field name="package_width"/>
+                    <field name="package_depth"/>
+                </xpath>
+                <xpath expr="//group[@name='group_lots_and_weight']" position="after">
+                  <group name="packaging" string="Product Measurement">
                         <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
                         <field name="net_weight"/>
                     </group>
                 </xpath>
+                
             </field>
         </record>
 
-        <record id="product_weight_product_normal_form_copra_view" model="ir.ui.view">
+        <record id="product_template_weight_product_normal_form_copra_view" model="ir.ui.view">
             <field name="name">product.weight.product.normal.form.view</field>
             <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//label[@for='volume']" position="attributes">
                     <attribute name="readonly">1</attribute>
@@ -30,22 +39,19 @@
                     <field name="package_width" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
                     <field name="package_depth" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
                 </xpath>
+                <xpath expr="//group[@name='group_lots_and_weight']" position="after">
+                  <group name="packaging" string="Product Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
+                        <field name="height"/>
+                        <field name="width"/>
+                        <field name="depth"/>
+                        <field name="net_weight"/>
+                    </group>
+                </xpath>
+                
             </field>
         </record>
 
-       <!--  <record id="product_weight_product_normal_form_copra_responsible_view" model="ir.ui.view">
-            <field name="name">product.weight.product.normal.form.view</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
-            <field name="arch" type="xml">
-                <xpath expr="//group[@name='group_lots_and_weight']/field[@name='responsible_id']" position="replace"/>
-                <xpath expr="//field[@name='package_height']" position="before">
-                    <field name="responsible_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
-                </xpath>
-            </field>
-        </record> -->
-
-        <record id="view_product_inherited_copra_form" model="ir.ui.view">
+        <record id="view_product_easy_edit_inherited_copra_form" model="ir.ui.view">
             <field name="name">product.product.inherited.form.copra</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
