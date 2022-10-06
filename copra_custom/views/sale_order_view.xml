@@ -7,9 +7,7 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock" />
             <field name="arch" type="xml">
-                <xpath
-                    expr="//field[@name='effective_date']"
-                    position="after">
+                <xpath expr="//field[@name='effective_date']" position="after">
                     <newline/>
                     <field name="freight_type" />
                 </xpath>
@@ -21,8 +19,11 @@
                     <field name="tag"/>
                     <field name="sfi"/>
                 </xpath>
+                <field name='analytic_account_id' position="replace"/>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="analytic_account_id" string="Project"/>
+                </xpath>
             </field>
         </record>
-
     </data>
 </odoo>

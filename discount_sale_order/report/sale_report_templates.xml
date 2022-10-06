@@ -18,23 +18,30 @@
                     <span t-field="line.discount_type"/>
                 </td>
             </xpath>
-            <xpath expr="//div[hasclass('clearfix')]//div//div//table//tr[hasclass('o_total')]" position="before">
-                <tr t-if="doc.total_global_discount > 0.0" class="border-black">
-                    <td>
-                        <span>Global Discount</span>
-                    </td>
-                    <td class="text-right">
-                        <span t-field="doc.total_global_discount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-                    </td>
-                </tr>
-                <tr t-if="doc.total_discount > 0.0">
-                    <td>
-                        <strong>Total Discount</strong>
-                    </td>
-                    <td class="text-right">
-                        <span t-field="doc.total_discount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-                    </td>
-                </tr>
+            <xpath expr="//div[hasclass('clearfix')]//div" position="before">
+                <div id="custom_discount" class="row" name="total">
+                    <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                        <table class="table table-sm">
+                            <tr t-if="doc.line_discount > 0.0" class="border-black">
+                                <td>
+                                    <span>Line Discount</span>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="doc.line_discount"
+                                        t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                                </td>
+                            </tr>
+                            <tr t-if="doc.total_global_discount > 0.0" class="border-black">
+                                <td>
+                                    <span>Global Discount</span>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="doc.total_global_discount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </xpath>
         </template>
     </data>

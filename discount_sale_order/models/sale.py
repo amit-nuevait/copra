@@ -58,7 +58,7 @@ class SaleOrder(models.Model):
                 'amount_tax': amount_tax,
                 'amount_total': total,
                 'total_global_discount': total_global_discount,
-                'total_discount': total_global_discount,
+                'total_discount': total_discount,
             })
 
     def _amount_by_group(self):

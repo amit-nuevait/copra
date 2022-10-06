@@ -20,7 +20,7 @@
                             <field name="line_discount" widget='monetary'/>
                             <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                             <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                            <field name="total_discount" widget='monetary' groups="product.group_discount_per_so_line,discount_account_invoice.group_order_global_discount" options="{'currency_field': 'currency_id'}"/>
+                            <field name="total_global_discount" widget='monetary' groups="product.group_discount_per_so_line,discount_account_invoice.group_order_global_discount" options="{'currency_field': 'currency_id'}"/>
                             <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                 <label for="amount_total" />
                             </div>

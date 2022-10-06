@@ -11,15 +11,15 @@ class ProductProduct(models.Model):
     package_height = fields.Float("Package Height(mm)")
     package_width = fields.Float("Package Width(mm)")
     package_depth = fields.Float("Package Depth(mm)")
-    weight = fields.Float('Weight', digits='Stock Weight', readonly=True)
+    volume = fields.Float(readonly=True, compute="compute_volume")
 
-    @api.onchange('package_height','package_width','package_depth')
-    def _onchange_weight(self):
+    @api.depends('package_height','package_width','package_depth')
+    def compute_volume(self):
         for rec in self:
-            rec.weight = 0.0
+            rec.volume = 0.0
             if rec.package_height and rec.package_width and rec.package_depth:
-                rec.weight = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
-      
+                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
+
     @api.model
     def create(self, vals):
         if 'default_code' not in vals or not vals.get('default_code', False):
@@ -47,14 +47,15 @@ class ProductTemplate(models.Model):
     package_height = fields.Float("Package Height(mm)", compute='_compute_package_height', inverse='_set_package_height', store=True)
     package_width = fields.Float("Package Width(mm)", compute='_compute_package_width', inverse='_set_package_width', store=True)
     package_depth = fields.Float("Package Depth(mm)", compute='_compute_package_depth', inverse='_set_package_depth', store=True)
-    weight = fields.Float(readonly=True)
+    volume = fields.Float(readonly=True, store=True)
     
     @api.onchange('package_height','package_width','package_depth')
-    def _onchange_weight(self):
+    def _onchange_volume(self):
         for rec in self:
-            rec.weight = 0.0
+            rec.volume = 0.0
             if rec.package_height and rec.package_width and rec.package_depth:
-                rec.weight = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
+                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
+
 
     # height
     @api.depends('product_variant_ids', 'product_variant_ids.height')
