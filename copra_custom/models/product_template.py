@@ -18,7 +18,7 @@ class ProductProduct(models.Model):
         for rec in self:
             rec.volume = 0.0
             if rec.package_height and rec.package_width and rec.package_depth:
-                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
+                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000000
 
     @api.model
     def create(self, vals):
@@ -54,8 +54,7 @@ class ProductTemplate(models.Model):
         for rec in self:
             rec.volume = 0.0
             if rec.package_height and rec.package_width and rec.package_depth:
-                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000
-
+                rec.volume = (rec.package_height * rec.package_width * rec.package_depth) / 1000000000
 
     # height
     @api.depends('product_variant_ids', 'product_variant_ids.height')
