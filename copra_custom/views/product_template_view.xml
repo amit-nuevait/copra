@@ -10,15 +10,15 @@
                     <attribute name="readonly">1</attribute>
                 </xpath>
                 <xpath expr="//label[@for='volume']" position="before">
-                    <field name="package_height"/>
                     <field name="package_width"/>
                     <field name="package_depth"/>
+                    <field name="package_height"/>
                 </xpath>
                 <xpath expr="//group[@name='group_lots_and_weight']" position="after">
                   <group name="packaging" string="Product Measurement">
-                        <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
+                        <field name="height"/>
                         <field name="net_weight"/>
                     </group>
                 </xpath>
@@ -35,15 +35,15 @@
                     <attribute name="readonly">1</attribute>
                 </xpath>
                 <xpath expr="//label[@for='volume']" position="before">
-                    <field name="package_height" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
                     <field name="package_width" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
                     <field name="package_depth" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+                    <field name="package_height" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
                 </xpath>
                 <xpath expr="//group[@name='group_lots_and_weight']" position="after">
                   <group name="packaging" string="Product Measurement" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
-                        <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
+                        <field name="height"/>
                         <field name="net_weight"/>
                     </group>
                 </xpath>
@@ -58,16 +58,16 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='weight']" position="after">
                     <group name="packaging" string="Product Measurement">
-                        <field name="height"/>
                         <field name="width"/>
                         <field name="depth"/>
                         <field name="net_weight"/>
+                        <field name="height"/>
                     </group>
                 </xpath> 
                 <xpath expr="//label[@for='volume']" position="before">
-                    <field name="package_height"/>
                     <field name="package_width"/>
                     <field name="package_depth"/>
+                    <field name="package_height"/>
                 </xpath>
             </field>
         </record>
