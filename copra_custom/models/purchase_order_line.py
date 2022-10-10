@@ -22,4 +22,9 @@ class PurchaseOrderLine(models.Model):
             sale_line_rec = self.env['sale.order.line'].browse(res['sale_line_id'])
             res['sfi'] = sale_line_rec.sfi or ''
             res['tag'] = sale_line_rec.tag or ''
+        elif values.get('tag', False) or values.get('sfi', False):
+            res['sfi'] = values['sfi'] or ''
+            res['tag'] = values['tag'] or ''
         return res
+
+

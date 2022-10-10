@@ -7,6 +7,13 @@ class StockMove(models.Model):
     tag = fields.Text("TAG")
     sfi = fields.Text("SFI")
 
+    def _prepare_procurement_values(self):
+        res = super(StockMove, self)._prepare_procurement_values()
+        if self.sale_line_id:
+            res['tag'] = self.sale_line_id.tag
+            res['sfi'] = self.sale_line_id.sfi
+        return res
+        
 
 class StockRule(models.Model):
 
