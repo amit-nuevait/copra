@@ -108,8 +108,9 @@ class SaleOrder(models.Model):
                 if line.discount_type == 'percent':
                     line.discount_amt = (sub_total_amt * line.discount) / 100  or 0.00
                 order.line_discount += line.discount_amt
-    def _create_invoices(self, grouped=False, final=False):
-        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final)
+
+    def _create_invoices(self, grouped=False, final=False, date=False):
+        moves = super(SaleOrder, self)._create_invoices(grouped=grouped, final=final, date=date)
         moves._compute_amount()
         return moves
 
