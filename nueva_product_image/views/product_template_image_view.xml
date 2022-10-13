@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- ADD PRODUCT DOCUMENT ONE2MANY IN PRODUCT TEMPLATE -->
+    <record id="product_template_doc_inherit_form_view" model="ir.ui.view">
+        <field name="name">product.template.document.inherit.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='variants']" position="after">
+                <page name="documents" string="Product Documents">
+                    <field name="product_doc_ids" domain="[('doc_belongs', '=', 'product')]">
+                        <tree editable="bottom">
+                            <field name="upload_doc" filename="name" widget="binary" required="1"/>
+                            <field name="name" invisible="1"/>
+                            <field name="doc_type"/>
+                            <field name="doc_belongs" required="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ADD PRODUCT DOCUMENT IN PRODUCT VARIANT -->
+    <record id="product_product_doc_inherit_form_view" model="ir.ui.view">
+        <field name="name">product.product.document.inherit.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="before">
+                <page name="documents" string="Documents">
+                    <field name="product_all_doc_ids">
+                        <tree editable="bottom">
+                            <field name="upload_doc" filename="name" widget="binary" required="1"/>
+                            <field name="name" invisible="1"/>
+                            <field name="doc_type"/>
+                            <field name="doc_belongs"/>
+                        </tree>
+                    </field>
+                    <field name="product_variant_doc_ids" class="o_website_sale_image_list oe_edit_only" context="{'default_name': name}" add-label="Add a Media" nolabel="1">
+                        <form string="Variant Documents">
+                            <sheet>
+                                <group colspan="2" col="4">
+                                    <field name="upload_doc" filename="name" widget="binary" required="1"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="doc_type"/>
+                                    <field name="doc_belongs"/>
+                                </group>
+                            </sheet>
+                        </form>
+                        <kanban class="o_kanban_mobile">
+                            <templates>
+                                <t t-name="kanban-box" invisible="1"></t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
