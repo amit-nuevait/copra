@@ -42,7 +42,7 @@ class ProductDocument(models.Model):
     def default_get(self, fields):
         res = super().default_get(fields)
         res['doc_type'] = ''
-        if self._context and self._context.get('params') and self._context.get('params').get('model') == 'product.template':
+        if self._context and self._context.get('search_default_filter_to_sell'):
             res['doc_belongs'] = 'product'
         else:
             res['doc_belongs'] = 'variant'
