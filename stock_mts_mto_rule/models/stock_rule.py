@@ -16,35 +16,6 @@ class StockRule(models.Model):
     mts_rule_id = fields.Many2one("stock.rule", string="MTS Rule", check_company=True)
     mto_rule_id = fields.Many2one("stock.rule", string="MTO Rule", check_company=True)
 
-    @api.model
-    def _run_buy(self, procurements):
-        res = super(StockRule, self)._run_buy(procurements)
-        for procurement, rule in procurements:
-            if rule and rule.route_id.auto_confirm_po:
-                procurement_date_planned = fields.Datetime.from_string(procurement.values['date_planned'])
-                supplier = False
-                if procurement.values.get('supplierinfo_id'):
-                    supplier = procurement.values['supplierinfo_id']
-                else:
-                    supplier = procurement.product_id.with_company(procurement.company_id.id)._select_seller(
-                        partner_id=procurement.values.get("supplierinfo_name"),
-                        quantity=procurement.product_qty,
-                        date=procurement_date_planned.date(),
-                        uom_id=procurement.product_uom)
-
-                supplier = supplier or procurement.product_id._prepare_sellers(False).filtered(
-                    lambda s: not s.company_id or s.company_id == procurement.company_id
-                )[:1]
-
-                if supplier:
-                    partner = supplier.name
-                    domain = rule._make_po_get_domain(procurement.company_id, procurement.values, partner)
-                    po = self.env['purchase.order'].sudo().search([dom for dom in domain], limit=1)
-                    po.button_confirm()
-        return res
-
-
-
     @api.constrains("action", "mts_rule_id", "mto_rule_id")
     def _check_mts_mto_rule(self):
         for rule in self:

@@ -14,6 +14,5 @@
     "depends": ["purchase_stock"],
     "data": ["data/stock_data.xml", 
              "view/pull_rule.xml", 
-             "view/warehouse.xml", 
-             "view/stock_location_route_view.xml"],
+             "view/warehouse.xml"],
 }
