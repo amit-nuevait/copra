@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_stock_location_routes_inherited" model="ir.ui.view">
+        <field name="name">stock.location.route.form.inherit</field>
+        <field name="model">stock.location.route</field>
+        <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="inside">
+                    <div>
+                        <group>
+                            <field name="default_routes" string="Default Routes"
+                               attrs="{'invisible': [('product_selectable', '=', False)]}" class="oe_inline"/>
+                        </group>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
