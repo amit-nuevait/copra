@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 from odoo import _, api, fields, models, SUPERUSER_ID
+from dateutil.relativedelta import relativedelta
 from itertools import groupby
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
