@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, fields, models, api
 
 
 class PurchaseOrderLine(models.Model):
@@ -14,36 +14,6 @@ class PurchaseOrderLine(models.Model):
             else:
                 return self.env['purchase.order.line']
         return res
-        """ Return the record in self where the procument with values passed as
-        args can be merged. If it returns an empty record then a new line will
-        be created.
-        """
-        description_picking = ''
-        if values.get('product_description_variants'):
-            description_picking = values['product_description_variants']
-        lines = self.filtered(
-            lambda l: l.sfi == values['sfi'] and l.tag == values['tag'] and l.propagate_cancel == values['propagate_cancel']
-            and (l.orderpoint_id == values['orderpoint_id'] if values['orderpoint_id'] and not values['move_dest_ids'] else True)
-        )
-        print ("LINES:::::::::::::", lines)
-        # In case 'product_description_variants' is in the values, we also filter on the PO line
-        # name. This way, we can merge lines with the same description. To do so, we need the
-        # product name in the context of the PO partner.
-        if lines and values.get('product_description_variants'):
-            partner = self.mapped('order_id.partner_id')[:1]
-            product_lang = product_id.with_context(
-                lang=partner.lang,
-                partner_id=partner.id,
-            )
-            name = product_lang.display_name
-            if product_lang.description_purchase:
-                name += '\n' + product_lang.description_purchase
-            lines = lines.filtered(lambda l: l.name == name + '\n' + description_picking)
-            if lines:
-                print (":::::::;;591::::::::;", lines, values)
-                return lines[0]
-        print (":::::::;;593::::::::;", lines, values)
-        return lines and lines[0] or self.env['purchase.order.line']
 
 
 class StockWarehouse(models.Model):

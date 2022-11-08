@@ -1,4 +1,5 @@
 from odoo import api, models, fields
+from dateutil.relativedelta import relativedelta
 
 
 class PurchaseOrderLine(models.Model):
@@ -25,6 +26,9 @@ class PurchaseOrderLine(models.Model):
         elif values.get('tag', False) or values.get('sfi', False):
             res['sfi'] = values['sfi'] or ''
             res['tag'] = values['tag'] or ''
+        supplier = values.get('supplier')
+        res['date_planned'] = values.get('date_planned') + relativedelta(
+                        days=supplier.delay)
         return res
 
 
