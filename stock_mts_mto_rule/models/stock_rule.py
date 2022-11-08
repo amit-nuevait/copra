@@ -2,6 +2,7 @@
 
 from collections import defaultdict
 from odoo import _, api, fields, models, SUPERUSER_ID
+from itertools import groupby
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
 from odoo.tools import float_compare, float_is_zero
