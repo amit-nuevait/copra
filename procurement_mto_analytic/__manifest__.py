@@ -9,6 +9,6 @@
     "license": "AGPL-3",
     "author": "Tecnativa, VentorTech, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-analytic",
-    "depends": ["sale_stock", "purchase_stock"],
+    "depends": ["sale_stock", "purchase_stock", 'sale_project'],
     "installable": True,
 }
