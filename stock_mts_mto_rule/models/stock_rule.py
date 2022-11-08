@@ -109,6 +109,14 @@ class StockRule(models.Model):
                 )
         return True
 
+    def _prepare_purchase_order(self, company_id, origins, values):
+        res = super(StockRule, self)._prepare_purchase_order(company_id, origins, values)
+        dates = [fields.Datetime.from_string(value['date_planned']) for value in values]
+        procurement_date_planned = min(dates)
+        purchase_date = procurement_date_planned
+        res['date_order'] = purchase_date
+        return res
+
     @api.model
     def _run_buy(self, procurements):
         procurements_by_po_domain = defaultdict(list)
