@@ -10,12 +10,24 @@
             <xpath expr="//page[@name='variants']" position="after">
                 <page name="documents" string="Product Documents">
                     <field name="product_doc_ids" domain="[('doc_belongs', '=', 'product')]">
-                        <tree editable="bottom">
-                            <field name="upload_doc" filename="name" widget="binary" required="1"/>
-                            <field name="name" invisible="1"/>
-                            <field name="doc_type"/>
-                            <field name="doc_belongs" required="1"/>
+                        <tree>
+                            <field name="name" readonly="1" force_save="1"/>
+                            <field name="doc_type" force_save="1"/>
+                            <field name="doc_belongs" required="1" force_save="1"/>
+                            <field name="upload_doc" filename="name" widget="binary" required="1"
+                                force_save="1"/>
                         </tree>
+                        <form string="Product Documents">
+                            <sheet>
+                                <group colspan="2" col="4">
+                                    <field name="upload_doc" filename="name" widget="binary" required="1"
+                                        force_save="1"/>
+                                    <field name="name" readonly="1" force_save="1"/>
+                                    <field name="doc_type" force_save="1"/>
+                                    <field name="doc_belongs" force_save="1"/>
+                                </group>
+                            </sheet>
+                        </form>
                     </field>
                 </page>
             </xpath>
@@ -32,20 +44,22 @@
                 <page name="documents" string="Documents">
                     <field name="product_all_doc_ids">
                         <tree editable="bottom">
-                            <field name="upload_doc" filename="name" widget="binary" required="1"/>
-                            <field name="name" invisible="1"/>
-                            <field name="doc_type"/>
-                            <field name="doc_belongs"/>
+                            <field name="name" readonly="1" force_save="1"/>
+                            <field name="doc_type" force_save="1"/>
+                            <field name="doc_belongs" force_save="1"/>
+                            <field name="upload_doc" filename="name" widget="binary" required="1"
+                                force_save="1"/>
                         </tree>
                     </field>
                     <field name="product_variant_doc_ids" class="o_website_sale_image_list oe_edit_only" context="{'default_name': name}" add-label="Add a Media" nolabel="1">
                         <form string="Variant Documents">
                             <sheet>
                                 <group colspan="2" col="4">
-                                    <field name="upload_doc" filename="name" widget="binary" required="1"/>
-                                    <field name="name" invisible="1"/>
-                                    <field name="doc_type"/>
-                                    <field name="doc_belongs"/>
+                                    <field name="upload_doc" filename="name" widget="binary" required="1"
+                                        force_save="1"/>
+                                    <field name="name" readonly="1" force_save="1"/>
+                                    <field name="doc_type" force_save="1"/>
+                                    <field name="doc_belongs" force_save="1"/>
                                 </group>
                             </sheet>
                         </form>

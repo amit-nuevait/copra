@@ -1,4 +1,5 @@
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
@@ -23,27 +24,26 @@ class ProductDocument(models.Model):
     _name = 'product.document'
     _description = 'Product Document'
 
-    name = fields.Char("Name",)
+    name = fields.Char("Name")
     product_tmpl_id = fields.Many2one('product.template', 'Product Template ID')
     product_id = fields.Many2one('product.product', 'Product ID')
     doc_belongs = fields.Selection([('product', 'Product'), ('variant', 'Variant')],
-        'Belongs', readonly=True)
+        'Belongs', readonly=True, compute="_compute_doc_belongs", store=True)
     upload_doc = fields.Binary('Document')
     doc_type = fields.Char('Type', compute='get_file_type', store=True)
 
     @api.depends('upload_doc', 'name')
     def get_file_type(self):
         for rec in self:
+            rec.doc_type = ''
             if rec.name:
                 name = (rec.name).rpartition('.')
                 rec.doc_type = name[-1].upper()
 
-    @api.model
-    def default_get(self, fields):
-        res = super().default_get(fields)
-        res['doc_type'] = ''
-        if self._context and self._context.get('search_default_filter_to_sell'):
-            res['doc_belongs'] = 'product'
-        else:
-            res['doc_belongs'] = 'variant'
-        return res
+    @api.depends('product_id', 'product_tmpl_id')
+    def _compute_doc_belongs(self):
+        for rec in self:
+            if rec.product_id and rec.product_id.is_product_variant:
+                rec.doc_belongs = 'variant'
+            else:
+                rec.doc_belongs = 'product'
