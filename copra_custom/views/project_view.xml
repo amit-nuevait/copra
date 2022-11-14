@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="copra_project_sale_custom_form" model="ir.ui.view">
+            <field name="name">copra.project.sale.custom.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="sale_project.view_edit_project_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_so']" position="after">
+                    <button class="oe_stat_button" type="object" name="action_view_custom_so"
+                        icon="fa-dollar"
+                        attrs="{'invisible':[('custom_so_count','&lt;',1)]}">
+                        <field name="custom_so_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
