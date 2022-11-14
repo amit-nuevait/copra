@@ -19,7 +19,7 @@
         "views/stock_picking_view.xml",
         "views/purchase_order_line_view.xml",
         "views/product_template_view.xml",
-        "views/project_view.xml"
+        "views/project_view.xml",
     ],
     "installable": True,
     "auto_install": False,
