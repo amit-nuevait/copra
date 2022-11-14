@@ -9,10 +9,11 @@
                     <xpath expr="//sheet/div" position="inside">
                         <field name="purchase_id" invisible="1" />
                         <button name="action_show_purchase" class="oe_stat_button"
-                            icon="fa-bars" type="object" help="View of purchase"
-                            attrs="{'invisible': [('purchase_id','=',False)]}">
+                            icon="fa-credit-card" type="object" help="View of purchase"
+                            attrs="{'invisible': [('purchase_id','=',False)]}"
+                            groups="purchase.group_purchase_user">
                             <div class="o_form_field o_stat_info">
-                                <span class="o_stat_text">Purchase Order</span>
+                                <span class="o_stat_text">Purchase</span>
                             </div>
                         </button>
                     </xpath>
