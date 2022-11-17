@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="view_view_picking_form_inherit_sale" model="ir.ui.view">
+            <field name="name">view.picking.form.inherit.sale</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//sheet/div" position="inside">
+                        <field name="sale_id" invisible="1" />
+                        <button name="action_show_sale" class="oe_stat_button"
+                            icon="fa-credit-card" type="object" help="View of sales list"
+                            attrs="{'invisible': [('sale_id','=',False)]}"
+                            >
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_text">Sale</span>
+                            </div>
+                        </button>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>
