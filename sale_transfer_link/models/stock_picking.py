@@ -6,7 +6,7 @@ class StockPicking(models.Model):
 
     def action_show_sale(self):
         self.ensure_one()
-        if self.purchase_id:
+        if self.sale_id:
             self.ensure_one()
             return {
                 'type': 'ir.actions.act_window',
